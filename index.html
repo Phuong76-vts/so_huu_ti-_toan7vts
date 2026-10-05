@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiêu lưu trên trục số – Toán 7</title>
+<meta name="description" content="Học liệu tương tác Toán 7 – Bài 1: Tập hợp các số hữu tỉ. GV Ngô Thị Phương, THCS Võ Thị Sáu, Hải Phòng.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Lexend:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf8f3;--panel:#fff;--ink:#12324a;--dim:#55707f;--line:#cfe3dc;--acc:#0e8f82;--accdk:#0a6a60;--acc2:#3fae49;--onacc:#fff;--gold:#e8a200;--gold2:#9a6200;--goldbg:#fff6dc;--soft:#e3f1ec;--note:#f6fbf9;--inbg:#fff;
+--okbg:#e5f6ea;--okc:#166534;--warnbg:#fff2dd;--warnc:#9a4b06;--infobg:#e7f0ff;--infoc:#1e3a8a;--shadow:0 3px 14px rgba(18,50,74,.07);--certbg:linear-gradient(135deg,#fffbea,#e8faf2);--certink:#12324a;--certacc:#b0125b}
+body{background:radial-gradient(circle at 90% -10%,#c9f1e3 0,transparent 40%),radial-gradient(circle at -10% 30%,#dff3ff 0,transparent 35%),var(--bg)}
+
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Be Vietnam Pro',system-ui,sans-serif}
+.app{max-width:1140px;margin:0 auto;padding:18px 16px 26px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center}
+.logo{flex:0 0 66px;height:66px;border:2px solid var(--acc);border-radius:12px;display:flex;flex-direction:column;justify-content:center;padding:4px 9px;color:var(--acc);background:var(--panel)}
+.logo small{font:700 11px 'JetBrains Mono',monospace}.logo b{font:800 21px/1.1 'Lexend',sans-serif;white-space:nowrap}
+h1{margin:0;font:800 clamp(26px,5vw,46px)/1.08 'Lexend',sans-serif;letter-spacing:-.015em}
+.sub{font:600 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--dim);margin-top:5px;text-transform:uppercase}
+.hud{display:flex;gap:8px}
+.hbtn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:8px 14px;font:600 14px 'JetBrains Mono',monospace;cursor:pointer}
+.hbtn b{color:var(--gold);font-size:17px}
+.rooms{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.rooms button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:8px 14px;font:700 14px 'Be Vietnam Pro',sans-serif;cursor:pointer;display:flex;gap:7px;align-items:center}
+.rooms button .n{font:600 12px 'JetBrains Mono',monospace;color:var(--dim)}
+.rooms button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.rooms button.on .n{color:inherit;opacity:.7}
+.chip{display:inline-block;font:700 12px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:3px 11px;background:var(--panel)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
+.hero h2{font:800 clamp(26px,4.3vw,42px)/1.15 'Lexend',sans-serif;margin:12px 0;letter-spacing:-.01em}
+.hero p{color:var(--dim)}
+.quote{border-left:4px solid var(--gold);padding:2px 12px;color:var(--gold2);font-size:18px;margin:12px 0}
+.hub{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:24px}
+.room{display:flex;gap:14px;text-align:left;cursor:pointer;color:var(--ink);font:inherit;transition:transform .15s,border-color .15s}
+.room:hover{border-color:var(--acc);transform:translateY(-2px)}
+.room .t,.tile{flex:0 0 64px;height:64px;border:2px solid var(--acc);border-radius:12px;display:flex;flex-direction:column;justify-content:center;padding:4px 8px;color:var(--acc)}
+.room .t small{font:700 11px 'JetBrains Mono',monospace}.room .t b{font:800 18px/1.1 'Lexend',sans-serif;white-space:nowrap}
+.room h3{margin:0;font:700 20px/1.25 'Lexend',sans-serif}.room p{margin:3px 0 5px;color:var(--dim);font-size:14px}
+.room .st{font:700 13px 'JetBrains Mono',monospace;color:var(--gold)}
+.rhead{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}
+.coach{display:flex;gap:10px;align-items:center;flex:1 1 380px}
+.coach .av{font-size:36px;line-height:1;animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.coach .say{background:var(--panel);border:1px solid var(--line);border-radius:4px 16px 16px 16px;padding:8px 13px;font-size:15px;flex:1}
+.act{margin-bottom:16px}
+.act h3{margin:0 0 4px;font:700 21px/1.3 'Lexend',sans-serif;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bpill{font:700 12px 'JetBrains Mono',monospace;border:1px dashed var(--line);color:var(--dim);border-radius:999px;padding:2px 9px}
+.bpill.got{border:1px solid var(--gold);color:var(--gold2);background:var(--goldbg)}
+.dim{color:var(--dim)}.small{font-size:14px}
+.tnote{border:1px dashed var(--line);border-radius:14px;padding:10px 14px;margin-top:14px;background:var(--note);font-size:15px}
+.tnote summary{cursor:pointer;font-weight:800;color:var(--acc)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.center{justify-content:center}
+.btn{border:none;border-radius:13px;padding:11px 18px;font:800 16px 'Be Vietnam Pro',sans-serif;cursor:pointer;transition:transform .1s}
+.btn:active{transform:scale(.96)}
+.btn.main{background:var(--acc);color:var(--onacc);box-shadow:0 4px 0 var(--accdk)}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.line{background:transparent;border:2px solid var(--line);color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:default}
+.msg{border-radius:13px;padding:10px 14px;margin-top:12px;font-size:15.5px}
+.msg.ok{background:var(--okbg);color:var(--okc)}.msg.warn{background:var(--warnbg);color:var(--warnc)}.msg.info{background:var(--infobg);color:var(--infoc)}
+.prog{height:9px;background:var(--soft);border-radius:99px;overflow:hidden;margin:10px 0 2px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0;transition:width .35s}
+.fx{display:inline-flex;align-items:center;gap:2px;vertical-align:middle}
+.fr{display:inline-flex;flex-direction:column;text-align:center;line-height:1.05;vertical-align:middle}
+.fr b{font-weight:inherit;padding:0 3px}.fr b:first-child{border-bottom:.09em solid currentColor}
+.numin{width:84px;font:800 20px 'Be Vietnam Pro',sans-serif;text-align:center;padding:8px;border:2px solid var(--line);border-radius:12px;background:var(--inbg);color:var(--ink)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
+.opt{border:2px solid var(--line);background:var(--panel);color:var(--ink);border-radius:14px;padding:12px 14px;font:700 17px 'Be Vietnam Pro',sans-serif;cursor:pointer;text-align:left}
+.opt:hover{border-color:var(--acc)}
+.opt.right{border-color:#16a34a;background:var(--okbg);color:var(--okc)}.opt.wrong{border-color:#dc2626;background:var(--warnbg);color:var(--warnc)}
+.big{font:800 34px 'Be Vietnam Pro',sans-serif;color:var(--acc)}
+svg{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.pop{animation:pp .5s}@keyframes pp{40%{transform:scale(1.15)}}
+/* quiz */
+.quiz{max-width:820px;margin:0 auto}
+.qtop{display:flex;justify-content:space-between;font:700 14px 'JetBrains Mono',monospace;color:var(--dim)}
+.qbar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:8px 0 14px}.qbar i{display:block;height:100%;background:var(--gold);transition:width 1s linear}
+.qq{font:700 22px/1.4 'Lexend',sans-serif;margin:6px 0 10px}
+.cert{text-align:center;border:4px double var(--gold);border-radius:22px;padding:26px 18px;background:var(--certbg);color:var(--certink)}
+.cert .m{font:700 13px 'JetBrains Mono',monospace;letter-spacing:.2em}
+.cert h2{font:800 30px 'Lexend',sans-serif;margin:10px 0 2px;letter-spacing:.04em}
+.cert .ct{font:800 22px 'Lexend',sans-serif;color:var(--certacc)}
+.cert .who{font:900 30px 'Be Vietnam Pro',sans-serif;border-bottom:2px dashed var(--gold);display:inline-block;min-width:240px;padding:0 12px;margin:8px 0}
+.cert input{font:700 17px 'Be Vietnam Pro',sans-serif;padding:9px 12px;border:2px solid var(--line);border-radius:12px;max-width:100%;background:#fff;color:#1b2440}
+table.info{width:100%;border-collapse:collapse;font-size:15px}
+table.info th{text-align:left;vertical-align:top;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);width:28%;color:var(--acc)}
+table.info td{padding:9px 0;border-bottom:1px solid var(--line)}
+footer{text-align:center;color:var(--dim);font-size:13px;padding:6px 16px 30px}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:9998}
+#toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-200%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-weight:800;z-index:9999;transition:transform .35s;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:92vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}#toast:empty{display:none}
+.hscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.swipe{display:none;text-align:center;font-size:12.5px;color:var(--dim)}
+@media(max-width:820px){.hero,.grid2{grid-template-columns:1fr}}
+@media(max-width:600px){.app{padding:14px 12px}.rooms button{padding:7px 11px;font-size:13px}.panel{padding:14px}.logo{flex-basis:56px;height:56px}.swipe{display:block}.hscroll svg{min-width:640px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.flower{background:#ffe3ef;color:#b0125b;border-radius:16px;padding:4px 14px;font-size:30px;font-weight:900}
+.target{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:19px;font-weight:700;margin:8px 0}
+.btn.arrow{background:var(--panel);border:2px solid var(--line);font-size:20px;padding:8px 16px;color:var(--ink)}
+/* máy biến hình */
+.conv{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:16px 0 4px}
+.machine{min-width:170px;height:110px;border-radius:20px;background:linear-gradient(135deg,#0e8f82,#3fae49);color:#fff;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 0 #0a6a60;padding:0 18px}
+.machine .big{color:#fff;font-size:38px}
+.machine .gear{position:absolute;top:-16px;right:-12px;font-size:32px}
+.machine.spin .gear{animation:spin .8s linear}@keyframes spin{to{transform:rotate(360deg)}}
+.eq{font:900 38px 'Be Vietnam Pro',sans-serif;color:var(--ink)}
+.frin{display:inline-flex;flex-direction:column;align-items:center;gap:6px}.frin .fbar{width:96px;height:4px;background:var(--ink);border-radius:2px}
+/* bóng bay */
+.arena{display:flex;align-items:center;justify-content:center;gap:clamp(10px,4vw,30px);margin:16px 0 6px}
+.ball{width:clamp(96px,24vw,130px);height:clamp(96px,24vw,130px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(26px,6vw,34px);font-weight:900;color:#fff;position:relative;animation:float 3s ease-in-out infinite}
+.ball:after{content:"";position:absolute;bottom:-16px;left:50%;width:2px;height:18px;background:#8899aa}
+.ball.a{background:radial-gradient(circle at 30% 30%,#6aa8ff,#2563eb)}.ball.b{background:radial-gradient(circle at 30% 30%,#ff9a9a,#e63946);animation-delay:-1.5s}
+@keyframes float{50%{transform:translateY(-8px)}}
+.slot{width:62px;height:62px;border:3px dashed var(--line);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:var(--dim);background:#fff}
+.slot.ok{border-color:#16a34a;color:#16a34a;border-style:solid}.slot.bad{border-color:#e63946;color:#e63946;border-style:solid}
+.cmp{font-size:30px;min-width:74px;background:#fff;border:3px solid var(--ink);color:var(--ink);box-shadow:0 4px 0 var(--ink)}
+.streak{font-weight:900;color:#e85d04;min-height:24px;text-align:center}
+/* thẻ */
+.deck{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0;perspective:900px}
+.mc{position:relative;aspect-ratio:4/3;border:none;background:none;padding:0;cursor:pointer;font-family:inherit}
+.mc .in{position:absolute;inset:0;transition:transform .45s;transform-style:preserve-3d}
+.mc.open .in,.mc.got .in{transform:rotateY(180deg)}
+.mc .f,.mc .k{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.mc .k{background:linear-gradient(135deg,#0e8f82,#3fae49);color:#fff;font-size:28px;box-shadow:0 4px 0 #0a6a60}
+.mc .f{background:#fff;border:3px solid #3a86ff;transform:rotateY(180deg);font-size:clamp(18px,3.6vw,25px);font-weight:900;color:var(--ink)}
+.mc.got .f{border-color:#3fae49;background:#ecfbea}.mc.no .f{border-color:#e63946;background:#fff0f0}
+/* biển sâu */
+.objs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.obj{border:3px solid var(--line);background:#fff;border-radius:16px;padding:10px 6px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink)}
+.obj .e{font-size:34px;line-height:1.1}.obj .n{font-size:13.5px;font-weight:700}.obj .v{font-size:20px;font-weight:900}
+.obj.picked{border-color:#3a86ff;background:#e8f1ff;opacity:.55}
+.order{min-height:44px;font-size:22px;font-weight:800;background:var(--soft);border-radius:12px;padding:6px 12px}
+@media(max-width:600px){.deck{grid-template-columns:repeat(3,1fr)}}
+
+</style>
+</head>
+<body>
+<canvas id="cf"></canvas><div id="toast" role="status" aria-live="polite"></div>
+<div class="app">
+<header class="top">
+  <div class="brand"><div class="logo"><small>1</small><b>ℚ</b></div><div><h1>Phiêu lưu trên trục số</h1><div class="sub">Toán 7 · Bài 1 · Tập hợp các số hữu tỉ · Học liệu tương tác và mô phỏng</div></div></div>
+  <div class="hud"><button class="hbtn" id="snd" aria-label="Bật/tắt âm thanh">🔊</button><div class="hbtn">Huy hiệu <b id="bc">0</b>/<span id="bt">0</span></div></div>
+</header>
+<nav class="rooms" id="nav" aria-label="Các phòng học"></nav>
+
+<section class="view" id="v-hub">
+  <div class="hero">
+    <div><span class="chip">Phòng chờ</span><h2>Một sáng mùa đông, nhiệt kế ở Sa Pa chỉ −1,5 °C, ở Mẫu Sơn chỉ −3/2 °C. Nơi nào lạnh hơn?</h2>
+<div class="quote">Gợi ý: hai số trông khác nhau vẫn có thể là cùng một điểm trên trục số.</div>
+<p>Cùng Ếch Hữu Tỉ đi qua 5 phòng: nhận diện số hữu tỉ, nhảy trên trục số, soi gương tìm số đối, so sánh và sắp xếp. Hoàn thành nhiệm vụ để nhận huy hiệu và giấy chứng nhận Nhà thám hiểm trục số.</p>
+</div>
+    <div class="panel" style="text-align:center">
+<svg id="heroSvg" viewBox="0 0 500 280" aria-label="Ếch nhảy trên trục số: các cách viết khác nhau của cùng một số hữu tỉ"></svg>
+<div id="heroCap" style="font:800 20px 'Lexend',sans-serif;min-height:30px"></div>
+</div>
+  </div>
+  <div class="hub" id="hubRooms"></div>
+</section>
+
+<!-- R1 NHẬN DIỆN -->
+<section class="view" id="v-r1" hidden>
+  <div class="panel act">
+    <h3>Máy biến hình: viết thành phân số a/b <span class="bpill" data-badge="conv"></span></h3>
+    <div class="dim">Số hữu tỉ là số viết được dưới dạng phân số <b>a/b</b> với a, b là số nguyên, b ≠ 0. Hãy "biến" mỗi số thành một phân số rồi bấm Biến hình. Đúng ngay lần đầu 4/6 số để nhận huy hiệu.</div>
+    <div class="prog"><i id="cv-p"></i></div><div class="dim small" id="cv-c"></div>
+    <div class="conv"><div class="machine" id="cv-m"><span class="big" id="cv-x"></span><span class="gear">⚙️</span></div><span class="eq">=</span>
+      <span class="frin"><input class="numin" id="cv-n" type="number" inputmode="numeric" aria-label="Tử số a"><span class="fbar"></span><input class="numin" id="cv-d" type="number" inputmode="numeric" aria-label="Mẫu số b"></span></div>
+    <div class="row center"><button class="btn main" id="cv-ck">⚙️ Biến hình</button><button class="btn ghost" id="cv-nx">Số tiếp ➜</button></div>
+    <div id="cv-f"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel act">
+      <h3>Lật thẻ "sinh đôi" <span class="bpill" data-badge="twin"></span></h3>
+      <div class="dim">Lật 2 thẻ: nếu là <b>cùng một số hữu tỉ</b> (ví dụ −0,5 và −1/2) thì giữ lại. Tìm đủ 6 cặp.</div>
+      <div class="row"><span class="dim small">Lượt lật: <b id="tw-moves">0</b> · Cặp: <b id="tw-pairs">0</b>/6</span><button class="btn ghost" id="tw-re">🔀 Ván mới</button></div>
+      <div class="deck" id="tw-deck"></div>
+      <svg id="tw-line" viewBox="0 0 820 130" aria-label="Trục số các cặp đã tìm"></svg>
+      <div id="tw-f"></div>
+    </div>
+    <div class="panel act">
+      <h3>Các tập hợp số em đã học</h3>
+      <svg viewBox="0 0 420 300" aria-label="Sơ đồ tập hợp N nằm trong Z nằm trong Q">
+        <ellipse cx="210" cy="152" rx="200" ry="140" fill="#e6f7f1" stroke="#0e8f82" stroke-width="3"/>
+        <ellipse cx="185" cy="170" rx="135" ry="98" fill="#e7f0ff" stroke="#3a86ff" stroke-width="3"/>
+        <ellipse cx="165" cy="185" rx="72" ry="56" fill="#fff6dc" stroke="#e8a200" stroke-width="3"/>
+        <text x="352" y="70" font-size="30" font-weight="900" fill="#0e8f82">ℚ</text><text x="270" y="110" font-size="28" font-weight="900" fill="#3a86ff">ℤ</text><text x="205" y="160" font-size="26" font-weight="900" fill="#b07700">ℕ</text>
+        <g font-size="19" font-weight="800" fill="#12324a"><text x="120" y="190">0</text><text x="150" y="215">5</text><text x="170" y="192">1</text>
+        <text x="80" y="140">−3</text><text x="250" y="230">−1</text><text x="255" y="160">−12</text>
+        <text x="40" y="95">−1/2</text><text x="335" y="205">0,75</text><text x="250" y="270">−1,25</text><text x="345" y="140">7/3</text><text x="190" y="60">−5/8</text></g>
+      </svg>
+      <div class="dim small">Số tự nhiên, số nguyên, phân số, số thập phân hữu hạn đều viết được dưới dạng a/b, nên đều là số hữu tỉ: <b>ℕ ⊂ ℤ ⊂ ℚ</b>.</div>
+    </div>
+  </div>
+  <details class="tnote"><summary>Gợi ý cho giáo viên</summary>Dùng ở mục 1. Số hữu tỉ. Trước khi bấm, cho học sinh dự đoán: "Số nguyên 3 có phải số hữu tỉ không?", "0,5 viết thành phân số nào?". Máy biến hình chấp nhận mọi phân số bằng nhau (1/2, 2/4, 50/100…), chỉ cần mẫu số khác 0; sau đó giáo viên chốt: mỗi số hữu tỉ có vô số cách viết. Lật thẻ: thi đua theo nhóm, nhóm nào hoàn thành với ít lượt lật nhất thắng. Kết luận bằng sơ đồ ℕ ⊂ ℤ ⊂ ℚ.</details>
+</section>
+
+<!-- R2 TRỤC SỐ -->
+<section class="view" id="v-r2" hidden>
+  <div class="panel act">
+    <h3>Đưa Ếch tới bông sen <span class="bpill" data-badge="frog"></span></h3>
+    <div class="dim">Mỗi lá sen là một vạch chia. Chọn lá sen đúng vị trí của số trên bông sen rồi bấm <b>Nhảy!</b> Ếch sẽ vừa nhảy vừa đếm. Đúng ngay lần đầu 6/8 câu để nhận huy hiệu.</div>
+    <div class="prog"><i id="fr-p"></i></div><div class="dim small" id="fr-c"></div>
+    <div class="target">Bông sen ghi số <span class="flower" id="fr-t"></span></div>
+    <div class="hscroll" id="fr-pw"><svg id="fr-pond" viewBox="0 0 820 190" aria-label="Ao sen trục số"></svg></div>
+    <div class="swipe">↔ Vuốt ngang để xem cả ao sen</div>
+    <div class="row center">
+      <button class="btn arrow" id="fr-lf" aria-label="Lá bên trái">◀</button><button class="btn main" id="fr-jump">🐸 Nhảy!</button><button class="btn arrow" id="fr-rt" aria-label="Lá bên phải">▶</button>
+      <button class="btn ghost" id="fr-nx">Câu tiếp ➜</button>
+    </div>
+    <div id="fr-f"></div>
+  </div>
+  <div class="panel act">
+    <h3>Gương số đối <span class="bpill" data-badge="mirror"></span></h3>
+    <div class="dim">Điểm 0 là chiếc gương. Ếch đứng ở một số, em hãy chọn lá sen của <b>số đối</b> rồi bấm Soi gương. Đúng ngay lần đầu 4/5 câu để nhận huy hiệu.</div>
+    <div class="prog"><i id="mr-p"></i></div><div class="dim small" id="mr-c"></div>
+    <div class="target">Ếch đang đứng ở <span class="flower" style="background:#e0f5f1;color:#0e8f82" id="mr-t"></span> · số đối là bao nhiêu?</div>
+    <div class="hscroll" id="mr-pw"><svg id="mr-pond" viewBox="0 0 820 190" aria-label="Trục số tìm số đối"></svg></div>
+    <div class="swipe">↔ Vuốt ngang để xem cả trục số</div>
+    <div class="row center"><button class="btn arrow" id="mr-lf" aria-label="Lá bên trái">◀</button><button class="btn main" id="mr-ck">🪞 Soi gương</button><button class="btn arrow" id="mr-rt" aria-label="Lá bên phải">▶</button><button class="btn ghost" id="mr-nx">Câu tiếp ➜</button></div>
+    <div id="mr-f"></div>
+  </div>
+  <details class="tnote"><summary>Gợi ý cho giáo viên</summary>Dùng ở mục Biểu diễn số hữu tỉ trên trục số và Số đối. Nhấn mạnh 3 bước: viết số dưới dạng phân số có mẫu dương; chia đoạn đơn vị thành số phần bằng nhau theo mẫu số; đếm số phần từ 0 (sang phải nếu dương, sang trái nếu âm). Ếch đếm to từng bước giúp học sinh chưa vững dễ theo dõi; nếu nhảy sai, học liệu cho biết lá vừa nhảy tới là số nào. Gương số đối: hai số đối nhau nằm về hai phía của điểm 0 và cách đều điểm 0; số đối của a là −a, số đối của −a là a.</details>
+</section>
+
+<!-- R3 SO SÁNH -->
+<section class="view" id="v-r3" hidden>
+  <div class="panel act">
+    <h3>Đấu trường bóng bay <span class="bpill" data-badge="cmp"></span></h3>
+    <div class="dim">Chọn dấu &lt;, = hoặc &gt;. Hai quả bóng sẽ rơi xuống trục số để em kiểm chứng. Trả lời đúng liên tiếp để tạo chuỗi 🔥. Đúng 6/8 câu để nhận huy hiệu.</div>
+    <div class="prog"><i id="cp-p"></i></div><div class="dim small" id="cp-c"></div>
+    <div class="arena"><div class="ball a" id="cp-a"></div><div class="slot" id="cp-s">?</div><div class="ball b" id="cp-b"></div></div>
+    <div class="streak" id="cp-streak"></div>
+    <div class="row center"><button class="btn cmp" data-c="<">&lt;</button><button class="btn cmp" data-c="=">=</button><button class="btn cmp" data-c=">">&gt;</button></div>
+    <svg id="cp-line" viewBox="0 0 820 130" aria-label="Trục số kiểm chứng"></svg>
+    <div id="cp-f"></div>
+    <div class="row"><button class="btn ghost" id="cp-nx">Câu tiếp ➜</button></div>
+  </div>
+  <details class="tnote"><summary>Gợi ý cho giáo viên</summary>Dùng ở mục 2. Thứ tự trong tập hợp các số hữu tỉ. Hai cách so sánh: (1) viết hai số dưới dạng phân số cùng mẫu dương rồi so sánh tử; (2) dựa vào vị trí trên trục số (điểm bên trái biểu diễn số nhỏ hơn). Có thể chiếu lên màn hình, cả lớp giơ thẻ &lt;, =, &gt; trước khi giáo viên bấm. Lời giải quy đồng hiện ngay sau mỗi câu.</details>
+</section>
+
+<!-- R4 SẮP XẾP -->
+<section class="view" id="v-r4" hidden>
+  <div class="panel act">
+    <h3>Thang máy biển sâu <span class="bpill" data-badge="order"></span></h3>
+    <div class="dim">Trục số đứng: <b>0 là mực nước biển</b>, số dương ở trên cao, số âm ở dưới nước (đơn vị: trăm mét). Bấm các nhân vật theo thứ tự <b>từ thấp nhất đến cao nhất</b>. Xếp đúng ngay 3/4 lượt để nhận huy hiệu.</div>
+    <div class="prog"><i id="od-p"></i></div><div class="dim small" id="od-c"></div>
+    <div class="grid2">
+      <div><div class="objs" id="od-objs"></div>
+        <div class="dim small">Thứ tự của em (thấp → cao):</div><div class="order" id="od-order"></div>
+        <div id="od-f"></div><div class="row"><button class="btn ghost" id="od-nx">Lượt tiếp ➜</button></div></div>
+      <svg id="od-sea" viewBox="0 0 420 440" aria-label="Trục số thẳng đứng, 0 là mực nước biển"></svg>
+    </div>
+  </div>
+  <details class="tnote"><summary>Gợi ý cho giáo viên</summary>Dùng ở phần Vận dụng: số hữu tỉ biểu thị độ cao, độ sâu so với mực nước biển. Đơn vị trục số là trăm mét, ví dụ −3/4 nghĩa là sâu 75 m dưới mực nước biển (số liệu giả định để minh hoạ). Yêu cầu học sinh nói cách làm: đổi các số về cùng dạng (số thập phân hoặc phân số cùng mẫu) rồi mới xếp. Có thể hỏi thêm: "Ai ở gần mực nước biển nhất?"</details>
+</section>
+
+
+<section class="view" id="v-r5" hidden>
+  <div class="quiz" id="quiz"></div>
+  <details class="tnote" style="max-width:820px;margin:14px auto 0"><summary>Gợi ý cho giáo viên</summary>Dùng ở phần Luyện tập hoặc củng cố cuối tiết, mỗi câu 30 giây. Đạt từ 6/8 câu nhận giấy chứng nhận Nhà thám hiểm trục số. Có thể cho cả lớp làm cùng lúc trên điện thoại rồi chụp giấy chứng nhận nộp qua nhóm lớp.</details>
+</section>
+
+<section class="view" id="v-info" hidden>
+  <div class="panel" style="max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
+    <span class="chip" style="align-self:flex-start">Thông tin học liệu (theo Công văn 5158/SGDĐT-GDTrH)</span>
+    <h2 style="font:800 28px 'Lexend',sans-serif;margin:0">Phiêu lưu trên trục số – Học liệu tương tác và mô phỏng</h2>
+    <div style="overflow-x:auto"><table class="info" id="infoT"></table></div>
+  </div>
+</section>
+</div>
+<footer>Học liệu số Toán 7 · GV Ngô Thị Phương – Trường THCS Võ Thị Sáu, phường An Biên, Hải Phòng · Giáo viên đồng sáng tạo cùng AI</footer>
+<script>
+/* ====== KHUNG CHUNG (dùng cho các học liệu Toán 7) ====== */
+const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1}
+function simp(f){const g=gcd(f.n,f.d);let n=f.n/g,d=f.d/g;if(d<0){n=-n;d=-d}return{n,d}}
+function parse(s){s=String(s).replace(/−/g,'-').replace(',','.').trim();
+  if(s.includes(' ')){const[w,fr]=s.split(' ');const[a,b]=fr.split('/').map(Number),W=Number(w);return simp({n:(Math.abs(W)*b+a)*(W<0?-1:1),d:b})}
+  if(s.includes('/')){const[a,b]=s.split('/').map(Number);return{n:a,d:b}}
+  const p=s.split('.');if(p.length===1)return{n:Number(s),d:1};
+  const d=Math.pow(10,p[1].length);return simp({n:Math.round(Number(s)*d),d})}
+function val(s){const f=parse(s);return f.n/f.d}
+function pretty(s){return String(s).replace(/-/g,'−')}
+function F(s){s=String(s);const neg=s[0]==='-',b=neg?s.slice(1):s;
+  if(b.includes(' ')){const[w,fr]=b.split(' ');const[n,d]=fr.split('/');return `<span class="fx">${neg?'−':''}${w}<span class="fr"><b>${n}</b><b>${d}</b></span></span>`}
+  if(b.includes('/')){const[n,d]=b.split('/');return `<span class="fx">${neg?'−':''}<span class="fr"><b>${n}</b><b>${d}</b></span></span>`}
+  return (neg?'−':'')+b}
+function fs(n,d){return (n<0?'−':'')+Math.abs(n)+(d===1?'':'/'+d)}
+function factors(n){const f=[];let d=2;n=Math.abs(n);while(n>1){while(n%d===0){f.push(d);n/=d}d++}return f}
+function decimal(a,b){const sign=(a<0)!==(b<0)&&a!==0?'-':'';a=Math.abs(a);b=Math.abs(b);
+  const int=Math.floor(a/b);let r=a%b;const seen={},digits=[],steps=[];let cs=-1;
+  while(r!==0&&digits.length<260){if(seen[r]!==undefined){cs=seen[r];break}seen[r]=digits.length;const q=Math.floor(r*10/b),nr=(r*10)%b;steps.push({r,q,nr});digits.push(q);r=nr}
+  const pre=cs<0?digits.join(''):digits.slice(0,cs).join(''),cyc=cs<0?'':digits.slice(cs).join('');
+  return{sign,int,pre,cyc,steps,repR:r}}
+function fmtD(d){return (d.sign?'−':'')+d.int+(d.pre||d.cyc?','+d.pre+(d.cyc?'('+d.cyc+')':''):'')}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* âm thanh */
+let AC=null,soundOn=true;try{soundOn=localStorage.getItem('vts-snd')!=='0'}catch(e){}
+function beep(f,d,type,v,w){if(!soundOn)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(w||0);o.type=type||'sine';o.frequency.value=f;
+  g.gain.setValueAtTime(v||.08,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
+const sfx={ok(){beep(660,.14);beep(990,.22,'sine',.08,.11)},bad(){beep(190,.28,'square',.035)},tap(){beep(540,.07,'triangle',.06)},
+  flip(){beep(420,.05,'triangle',.04)},tick(){beep(880,.03,'square',.02)},win(){[523,659,784,1047].forEach((f,i)=>beep(f,.3,'sine',.08,i*.13))}};
+
+/* pháo giấy + thông báo */
+let cv,cx,parts=[],raf=0;
+function confetti(n){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;cv=cv||$('cf');cx=cx||cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;
+  const cols=['#fbbf24','#f43f5e','#3b82f6','#22c55e','#ec4899','#14b8a6','#a78bfa'];
+  for(let i=0;i<(n||70);i++)parts.push({x:innerWidth/2+(Math.random()-.5)*240,y:innerHeight*.35,vx:(Math.random()-.5)*13,vy:-Math.random()*12-4,r:Math.random()*6+4,c:cols[i%7],a:Math.random()*6,l:95});
+  if(!raf)tick()}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.45;p.a+=.2;p.l--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);cx.restore()});
+  parts=parts.filter(p=>p.l>0&&p.y<cv.height+20);raf=parts.length?requestAnimationFrame(tick):(cx.clearRect(0,0,cv.width,cv.height),0)}
+let toastT=0;function toast(t){const e=$('toast');e.innerHTML=t;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),2600)}
+
+/* trạng thái, huy hiệu */
+const ST={b:{},name:''};
+function loadST(){try{const o=JSON.parse(localStorage.getItem(L.key)||'{}');ST.b=o.b||{};ST.name=o.name||''}catch(e){}}
+function saveST(){try{localStorage.setItem(L.key,JSON.stringify(ST))}catch(e){}}
+function award(k){if(ST.b[k])return false;ST.b[k]=1;saveST();sfx.win();confetti(110);toast('🏅 Huy hiệu mới: '+L.badges[k]);counts();return true}
+function counts(){const n=Object.keys(L.badges).filter(k=>ST.b[k]).length;$('bc').textContent=n;$('bt').textContent=Object.keys(L.badges).length;
+  $$('.bpill').forEach(p=>{const k=p.dataset.badge;p.classList.toggle('got',!!ST.b[k]);p.textContent=(ST.b[k]?'🏅 ':'○ ')+L.badges[k]});
+  $$('#hubRooms .room').forEach(b=>{const r=L.rooms.find(x=>x[0]===b.dataset.go);b.querySelector('.st').textContent='★ '+r[5].filter(k=>ST.b[k]).length+'/'+r[5].length})}
+function say(t){const v=$$('.view').find(x=>!x.hidden);const s=v&&v.querySelector('.say');if(s)s.innerHTML='<b>'+L.coach+':</b> '+t}
+function msg(id,t,cls){$(id).innerHTML=t?`<div class="msg ${cls||'info'}">${t}</div>`:''}
+function prog(p,i,n,s){$(p+'-p').style.width=(i/n*100)+'%';$(p+'-c').textContent='Câu '+Math.min(i+1,n)+'/'+n+' · Đúng ngay lần đầu: '+s}
+const STOP=[];function stopAll(){STOP.forEach(f=>{try{f()}catch(e){}})}
+function go(v){if(!$('v-'+v))v='hub';stopAll();$$('.view').forEach(x=>x.hidden=x.id!=='v-'+v);$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===v));
+  if(L.intro&&L.intro[v])say(L.intro[v]);if(v===L.quizRoom)qIntro();if(L.onEnter)L.onEnter(v);
+  try{history.replaceState(null,'','#'+v)}catch(e){}window.scrollTo(0,0)}
+
+/* thử thách tính giờ + giấy chứng nhận */
+let qi=0,qs=0,qt=null,tl=30,qLock=false,QS=[];
+STOP.push(()=>clearInterval(qt));
+function qIntro(){clearInterval(qt);$('quiz').innerHTML=`<div class="panel" style="text-align:center"><span class="chip">${L.quiz.length} câu · mỗi câu 30 giây</span>
+  <h2 style="font:800 30px 'Lexend',sans-serif;margin:12px 0 6px">${L.quizTitle}</h2><p class="dim">Đúng từ ${L.quizPass}/${L.quiz.length} câu trở lên để nhận giấy chứng nhận <b>${L.certTitle}</b>.</p>
+  <div class="row center"><input id="qName" class="numin" style="width:280px;font-size:17px;text-align:left" maxlength="40" placeholder="Tên và lớp của em" value="${(ST.name||'').replace(/"/g,'&quot;')}"></div>
+  <div class="row center"><button class="btn main" id="qGo">▶ Bắt đầu thử thách</button></div><p class="dim small">Tên chỉ lưu trên máy của em, không gửi đi đâu.</p></div>`;
+  $('qGo').onclick=()=>{ST.name=$('qName').value.trim();saveST();QS=L.quiz.map(q=>({...q,ord:shuffle(q.o.map((t,i)=>i))}));qi=0;qs=0;qRender()}}
+function qRender(){clearInterval(qt);const el=$('quiz');
+  if(qi>=QS.length){const pass=qs>=L.quizPass;if(pass)award('quiz');
+    const n=Object.keys(L.badges).filter(k=>ST.b[k]).length,N=Object.keys(L.badges).length;
+    el.innerHTML=pass?`<div class="cert"><div class="m">${L.certTop}</div><h2>GIẤY CHỨNG NHẬN</h2><div class="ct">${L.certTitle}</div><div style="margin-top:10px">Trao cho</div>
+      <div class="who" id="certWho">${ST.name||'. . . . . . . .'}</div><div>đã hoàn thành ${L.certWhat} với <b>${qs}/${QS.length}</b> câu đúng và đạt <b>${n}/${N}</b> huy hiệu.</div>
+      <div class="small" style="margin-top:6px;opacity:.8">Ngày ${new Date().toLocaleDateString('vi-VN')} · GV hướng dẫn: Ngô Thị Phương – Trường THCS Võ Thị Sáu, Hải Phòng</div>
+      <div class="row center"><input id="cName" maxlength="40" placeholder="Sửa tên của em" value="${(ST.name||'').replace(/"/g,'&quot;')}"></div>
+      <div class="small" style="margin-top:6px">📸 Chụp màn hình giấy chứng nhận gửi cô nhé!</div></div><div class="row center"><button class="btn ghost" id="qAgain">↻ Làm lại thử thách</button></div>`
+     :`<div class="panel" style="text-align:center"><h2 style="font:800 30px 'Lexend',sans-serif">${qs}/${QS.length} câu đúng</h2><p>Cần ${L.quizPass}/${QS.length} câu để nhận giấy chứng nhận. Em ôn lại các phòng rồi thử lại nhé!</p><div class="row center"><button class="btn main" id="qAgain">↻ Làm lại</button></div></div>`;
+    if(pass){confetti(160);$('cName').oninput=e=>{ST.name=e.target.value.trim();saveST();$('certWho').textContent=ST.name||'. . . . . . . .'}}
+    $('qAgain').onclick=()=>{QS=L.quiz.map(q=>({...q,ord:shuffle(q.o.map((t,i)=>i))}));qi=0;qs=0;qRender()};return}
+  const q=QS[qi];tl=30;qLock=false;
+  el.innerHTML=`<div class="panel"><div class="qtop"><span>Câu ${qi+1}/${QS.length}</span><span>Đúng: ${qs}</span><span id="qTime">⏱ 30 giây</span></div><div class="qbar"><i id="qBar" style="width:100%"></i></div>
+    <div class="qq">${q.q}</div><div class="opts" id="qOpts">${q.ord.map(i=>`<button class="opt" data-i="${i}">${q.o[i]}</button>`).join('')}</div><div id="qFb"></div>
+    <div class="row"><button class="btn main" id="qNext" hidden>Câu tiếp ➜</button></div></div>`;
+  $$('#qOpts .opt').forEach(b=>b.onclick=()=>qAns(+b.dataset.i));$('qNext').onclick=()=>{qi++;qRender()};
+  qt=setInterval(()=>{tl--;$('qTime').textContent='⏱ '+tl+' giây';$('qBar').style.width=(tl/30*100)+'%';if(tl<=5&&tl>0)sfx.tick();if(tl<=0)qAns(-1)},1000)}
+function qAns(i){if(qLock)return;qLock=true;clearInterval(qt);const q=QS[qi],ok=i===q.a;if(ok){qs++;sfx.ok()}else sfx.bad();
+  $$('#qOpts .opt').forEach(b=>{const k=+b.dataset.i;if(k===q.a)b.classList.add('right');else if(k===i)b.classList.add('wrong');b.disabled=true});
+  msg('qFb',(i<0?'⏰ Hết giờ! ':ok?'✅ Chính xác! ':'💭 Chưa đúng. ')+(q.e||''),ok?'ok':'warn');$('qNext').hidden=false;$('qNext').textContent=qi<QS.length-1?'Câu tiếp ➜':'Xem kết quả ➜'}
+
+/* khởi động */
+function boot(){loadST();
+  $('snd').textContent=soundOn?'🔊':'🔇';$('snd').onclick=()=>{soundOn=!soundOn;$('snd').textContent=soundOn?'🔊':'🔇';try{localStorage.setItem('vts-snd',soundOn?'1':'0')}catch(e){}};
+  $('nav').innerHTML=[['hub','00','Phòng chờ'],...L.rooms.map(r=>[r[0],r[3],r[1]]),['info','ⓘ','Thông tin học liệu']].map(r=>`<button data-go="${r[0]}"><span class="n">${r[1]}</span>${r[2]}</button>`).join('');
+  $$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  $('hubRooms').innerHTML=L.rooms.map(r=>`<button class="panel room" data-go="${r[0]}"><span class="t"><small>${r[3]}</small><b>${r[4]}</b></span><span><h3>${r[1]}</h3><p>${r[2]}</p><span class="st"></span></span></button>`).join('');
+  $$('#hubRooms .room').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  L.rooms.forEach(r=>{const s=$('v-'+r[0]);if(s)s.insertAdjacentHTML('afterbegin',`<div class="rhead"><span class="chip">Phòng ${r[3]} · ${r[1]}</span><div class="coach"><span class="av">${L.avatar}</span><div class="say"></div></div></div>`)});
+  $('infoT').innerHTML=L.info.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('');
+  counts();if(L.hero)L.hero();
+  const h=location.hash.slice(1);go($('v-'+h)?h:'hub')}
+
+/* ====== BÀI 1: PHIÊU LƯU TRÊN TRỤC SỐ ====== */
+const L={key:'vts-toan7-b1',coach:'Ếch Hữu Tỉ',avatar:'🐸',
+ rooms:[['r1','Cổng ℚ: nhận diện số hữu tỉ','Biến các số thành phân số a/b; lật thẻ tìm các cách viết của cùng một số hữu tỉ.','01','a/b',['conv','twin']],
+  ['r2','Ao sen trục số','Ếch nhảy và đếm từng vạch để biểu diễn số hữu tỉ; soi gương tìm số đối.','02','0 · 1',['frog','mirror']],
+  ['r3','Đấu trường bóng bay','So sánh hai số hữu tỉ; bóng rơi xuống trục số để kiểm chứng.','03','&lt; &gt;',['cmp']],
+  ['r4','Thang máy biển sâu','Sắp xếp số hữu tỉ trên trục số thẳng đứng, 0 là mực nước biển.','04','↕',['order']],
+  ['r5','Thử thách & chứng nhận','8 câu hỏi tính giờ, nhận giấy chứng nhận Nhà thám hiểm trục số.','05','★',['quiz']]],
+ badges:{conv:'Thợ biến hình',twin:'Săn thẻ sinh đôi',frog:'Ếch nhảy chuẩn',mirror:'Bậc thầy số đối',cmp:'Vô địch so sánh',order:'Thợ lặn sắp xếp',quiz:'Nhà thám hiểm trục số'},
+ quizRoom:'r5',quizPass:6,quizTitle:'Thử thách Nhà thám hiểm trục số',certTitle:'Nhà thám hiểm trục số',certTop:'PHIÊU LƯU TRÊN TRỤC SỐ · TOÁN 7 · BÀI 1',certWhat:'thử thách về tập hợp các số hữu tỉ',
+ intro:{r1:'Chào em! Số hữu tỉ là số viết được dưới dạng phân số <b>a/b</b> (a, b là số nguyên, b ≠ 0). Thử cho các số vào máy biến hình nhé!',
+  r2:'Mỗi đoạn từ 0 đến 1 được chia thành các phần bằng nhau theo <b>mẫu số</b>. Đếm vạch thật cẩn thận nhé!',
+  r3:'Số nằm <b>bên trái</b> trên trục số thì <b>nhỏ hơn</b>. Hai số âm: số nào xa 0 hơn thì nhỏ hơn.',
+  r4:'Xuống biển nào! Dưới mực nước biển là số âm, càng sâu thì số càng <b>nhỏ</b>.',
+  r5:'Thử thách cuối cùng! 8 câu, mỗi câu 30 giây. Bình tĩnh đọc kĩ đề nhé!'},
+ quiz:[
+  {q:'Cách viết nào sau đây <b>không</b> biểu diễn một số hữu tỉ?',o:['−0,25','5',F('3/0'),F('1 1/2')],a:2,e:'Phân số a/b phải có mẫu số b ≠ 0, nên 3/0 không phải là số.'},
+  {q:'Tập hợp các số hữu tỉ được kí hiệu là:',o:['ℕ','ℤ','ℚ','ℝ'],a:2,e:'ℕ: số tự nhiên, ℤ: số nguyên, ℚ: số hữu tỉ.'},
+  {q:'Số đối của '+F('-2/5')+' là:',o:[F('2/5'),F('-5/2'),F('5/2'),F('-2/5')],a:0,e:'Số đối của −a là a, nên số đối của −2/5 là 2/5.'},
+  {q:'Số −0,75 bằng phân số nào?',o:[F('-3/4'),F('-7/5'),F('3/4'),F('-75/10')],a:0,e:'−0,75 = −75/100 = −3/4. Còn −75/10 = −7,5.'},
+  {q:'So sánh '+F('-1/3')+' và '+F('-1/2')+':',o:['−1/3 &lt; −1/2','−1/3 = −1/2','−1/3 &gt; −1/2'],a:2,e:'−1/3 = −2/6 và −1/2 = −3/6; vì −2 &gt; −3 nên −1/3 &gt; −1/2.'},
+  {q:'Trên trục số, điểm biểu diễn số '+F('-5/4')+' nằm:',o:['bên phải điểm 0','giữa −2 và −1','giữa −1 và 0','giữa 1 và 2'],a:1,e:'−5/4 = −1,25 nên nằm giữa −2 và −1.'},
+  {q:'Sắp xếp các số 3/4; −1,2; 0; −1 theo thứ tự tăng dần:',o:['−1,2 &lt; −1 &lt; 0 &lt; 3/4','−1 &lt; −1,2 &lt; 0 &lt; 3/4','0 &lt; −1 &lt; −1,2 &lt; 3/4','3/4 &lt; 0 &lt; −1 &lt; −1,2'],a:0,e:'Số âm nhỏ hơn 0; −1,2 xa 0 hơn −1 nên −1,2 &lt; −1.'},
+  {q:'Nhiệt độ một ngày: 6 giờ là −2,5 °C, 12 giờ là 1/2 °C, 22 giờ là −3/4 °C. Lúc nào lạnh nhất?',o:['6 giờ','12 giờ','22 giờ','Như nhau'],a:0,e:'−2,5 &lt; −0,75 &lt; 0,5 nên lúc 6 giờ lạnh nhất.'}],
+ info:[['Tên học liệu','Phiêu lưu trên trục số'],['Loại học liệu','Học liệu tương tác và mô phỏng (mục II.2.3)'],['Môn học, lớp','Toán 7 – bộ sách Kết nối tri thức với cuộc sống'],['Bài học','Chương I. Bài 1. Tập hợp các số hữu tỉ'],
+  ['Yêu cầu cần đạt','Nhận biết được số hữu tỉ và lấy được ví dụ về số hữu tỉ; nhận biết được tập hợp các số hữu tỉ. Biểu diễn được số hữu tỉ trên trục số. Nhận biết được số đối của một số hữu tỉ và thứ tự trong tập hợp các số hữu tỉ; so sánh được hai số hữu tỉ.'],
+  ['Mục đích, đối tượng','Giáo viên dùng trong hoạt động khám phá, luyện tập, vận dụng; học sinh lớp 7 tự học, tự kiểm tra. Dùng được trong dạy học trực tiếp, trực tuyến, kết hợp.'],
+  ['Hướng dẫn khai thác','Chọn phòng trên thanh điều hướng. Mỗi phòng có mục "Gợi ý cho giáo viên". Nút 🤖 mở trợ giảng AI chỉ gợi ý, không cho đáp án. Chạy trên trình duyệt (máy tính, điện thoại, máy tính bảng), không cần cài đặt, không cần đăng nhập; trợ giảng AI cần kết nối Internet.'],
+  ['Tác giả','Ngô Thị Phương – Tổ Khoa học tự nhiên, Trường THCS Võ Thị Sáu, phường An Biên, thành phố Hải Phòng'],
+  ['Nguồn tài liệu','SGK Toán 7 tập một (Kết nối tri thức với cuộc sống), Bài 1: khái niệm số hữu tỉ, biểu diễn trên trục số, số đối, so sánh hai số hữu tỉ. Số liệu nhiệt độ, độ cao trong học liệu là giả định để minh hoạ.'],
+  ['Bản quyền','Hình vẽ, mô phỏng, âm thanh do tác giả tạo bằng mã; không dùng tài nguyên của bên thứ ba. Phông chữ Lexend, Be Vietnam Pro, JetBrains Mono (giấy phép SIL OFL). Cho phép sử dụng, chỉnh sửa cho mục đích giáo dục, ghi rõ nguồn.'],
+  ['Sử dụng trí tuệ nhân tạo','Có dùng trợ lý AI Claude (Anthropic) hỗ trợ thiết kế, viết mã; trợ giảng AI dùng Gemini (Google) với lời nhắc sư phạm do tác giả soạn. Tác giả đã kiểm tra, xác minh nội dung và chịu trách nhiệm về tính chính xác.'],
+  ['An toàn thông tin','Không thu thập, không gửi dữ liệu cá nhân; tên trên giấy chứng nhận và huy hiệu chỉ lưu trên thiết bị của người dùng.'],['Phiên bản','1.0 – tháng 10/2026']],
+ hero:heroB1,
+ onEnter(v){if(v==='r2')['fr-pw','mr-pw'].forEach(id=>{const w=$(id);w.scrollLeft=(w.scrollWidth-w.clientWidth)/2})}};
+
+/* ---------- trục số ngang ---------- */
+const AX0=60,AX1=760,MIN=-2,MAX=2,xOf=v=>AX0+(v-MIN)/(MAX-MIN)*(AX1-AX0);
+function axis(svg,den,marks){
+  let h=`<line x1="${AX0-20}" y1="60" x2="${AX1+20}" y2="60" stroke="#12324a" stroke-width="3"/><polygon points="${AX1+28},60 ${AX1+14},53 ${AX1+14},67" fill="#12324a"/>`;
+  for(let k=MIN*den;k<=MAX*den;k++){const x=xOf(k/den),mj=k%den===0;
+    h+=`<line x1="${x}" y1="${mj?46:52}" x2="${x}" y2="${mj?74:68}" stroke="${mj?'#12324a':'#9fb2bf'}" stroke-width="${mj?3:2}"/>`;
+    if(mj)h+=`<text x="${x}" y="100" text-anchor="middle" font-size="20" font-weight="700" fill="#12324a">${k/den<0?'−'+Math.abs(k/den):k/den}</text>`}
+  (marks||[]).forEach(m=>{const x=xOf(m.v);h+=`<g><circle cx="${x}" cy="60" r="11" fill="${m.c}" stroke="#fff" stroke-width="3">${m.drop?'<animate attributeName="cy" from="-20" to="60" dur=".55s" fill="freeze"/>':''}</circle>`+
+    (m.t?`<text x="${x}" y="${m.up?32:124}" text-anchor="middle" font-size="18" font-weight="800" fill="${m.c}">${m.t}</text>`:'')+'</g>'});
+  svg.innerHTML=h}
+/* ao sen: trục số có lá sen bấm được */
+const PY=118;
+function pond(svg,o){const den=o.den,sp=(AX1-AX0)/((MAX-MIN)*den),rx=Math.min(sp*.44,22);
+  let h=`<defs><linearGradient id="${o.gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9f0ff"/><stop offset="1" stop-color="#7cc9e8"/></linearGradient></defs>
+  <rect x="0" y="70" width="820" height="120" rx="18" fill="url(#${o.gid})"/>
+  <path d="M30 96 q20 -6 40 0 t40 0 M640 168 q20 -6 40 0 t40 0 M300 176 q20-6 40 0" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>
+  <line x1="${AX0-20}" y1="${PY}" x2="${AX1+20}" y2="${PY}" stroke="#12324a" stroke-width="2.5" opacity=".55"/><polygon points="${AX1+28},${PY} ${AX1+14},${PY-7} ${AX1+14},${PY+7}" fill="#12324a" opacity=".55"/>`;
+  if(o.mirror)h+=`<line x1="${xOf(0)}" y1="64" x2="${xOf(0)}" y2="186" stroke="#7c3aed" stroke-width="3" stroke-dasharray="7 6"/><text x="${xOf(0)+8}" y="84" font-size="15" font-weight="800" fill="#7c3aed">gương</text>`;
+  for(let k=MIN*den;k<=MAX*den;k++){const x=xOf(k/den),mj=k%den===0,on=o.sel===k;
+    h+=`<ellipse cx="${x}" cy="${PY}" rx="${rx}" ry="${mj?9:7}" fill="${mj?'#2f9e44':'#69c56f'}" stroke="${on?'#f59e0b':'#1f7a33'}" stroke-width="${on?5:1.5}"/>`;
+    if(mj)h+=`<text x="${x}" y="${PY+44}" text-anchor="middle" font-size="22" font-weight="800" fill="#12324a">${k/den<0?'−'+Math.abs(k/den):k/den}</text>`}
+  if(o.span){const a=xOf(0),b=xOf(o.span/den),c=xOf(-o.span/den);h+=`<line x1="${a}" y1="100" x2="${b}" y2="100" stroke="#0e8f82" stroke-width="4"/><line x1="${a}" y1="100" x2="${c}" y2="100" stroke="#db2777" stroke-width="4"/>`}
+  if(o.flower!=null)h+=`<text x="${xOf(o.flower)+18}" y="${PY+8}" font-size="22">🪷</text>`;
+  (o.labels||[]).forEach(l=>h+=`<text x="${l.x}" y="${l.y}" text-anchor="middle" font-size="20" font-weight="900" fill="${l.c}">${l.t}</text>`);
+  (o.frogs||[]).forEach(f=>h+=f.flip?`<g transform="translate(${f.x},${f.y+4}) scale(-1,1)"><text text-anchor="middle" font-size="34">🐸</text></g>`:`<text x="${f.x}" y="${f.y+4}" text-anchor="middle" font-size="34">🐸</text>`);
+  for(let k=MIN*den;k<=MAX*den;k++){const x=xOf(k/den);h+=`<rect data-k="${k}" x="${x-sp/2}" y="70" width="${sp}" height="120" fill="transparent" style="cursor:pointer"/>`}
+  svg.innerHTML=h;svg.querySelectorAll('rect[data-k]').forEach(r=>r.onclick=()=>o.pick&&o.pick(+r.dataset.k))}
+
+/* ---------- PHÒNG CHỜ: ếch nhảy giữa các cách viết ---------- */
+function heroB1(){const S=[[-1.5,['−3/2','−1,5','−6/4']],[0.75,['3/4','0,75','6/8']],[-0.5,['−1/2','−0,5','−2/4']],[1.25,['5/4','1,25','1 1/4']]];
+  const W=500,X0=40,X1=460,hx=v=>X0+(v+2)/4*(X1-X0),Y=190;let cur=0,fx=hx(0),fy=Y,si=-1;
+  function draw(lbl){let h=`<rect x="0" y="150" width="500" height="120" rx="18" fill="#bfe9f7"/><line x1="20" y1="${Y}" x2="480" y2="${Y}" stroke="#12324a" stroke-width="3"/><polygon points="488,${Y} 474,${Y-7} 474,${Y+7}" fill="#12324a"/>`;
+    for(let k=-8;k<=8;k++){const x=hx(k/4),mj=k%4===0;h+=`<ellipse cx="${x}" cy="${Y}" rx="${mj?14:10}" ry="${mj?7:5}" fill="${mj?'#2f9e44':'#69c56f'}"/>`;if(mj)h+=`<text x="${x}" y="${Y+40}" text-anchor="middle" font-size="20" font-weight="800" fill="#12324a">${k<0?'−'+(-k/4):k/4}</text>`}
+    if(lbl)lbl.forEach((t,j)=>h+=`<text x="${hx(S[si][0])}" y="${40+j*34}" text-anchor="middle" font-size="26" font-weight="900" fill="${['#0e8f82','#db2777','#2563eb'][j]}">${t}</text>`);
+    if(lbl)h+=`<line x1="${hx(S[si][0])}" y1="118" x2="${hx(S[si][0])}" y2="${Y-26}" stroke="#94a3b8" stroke-dasharray="5 5"/>`;
+    h+=`<text x="${fx}" y="${fy+4}" text-anchor="middle" font-size="40">🐸</text>`;$('heroSvg').innerHTML=h}
+  function step(){if($('v-hub').hidden){setTimeout(step,1500);return}si=(si+1)%S.length;const tx=hx(S[si][0]),x0=fx,t0=performance.now();$('heroCap').textContent='';
+    (function an(now){const t=Math.min(1,(now-t0)/700);fx=x0+(tx-x0)*t;fy=Y-Math.sin(Math.PI*t)*70;draw(null);if(t<1)requestAnimationFrame(an);else{fy=Y;draw(S[si][1]);$('heroCap').innerHTML=S[si][1].join(' = ')+' → <span style="color:#0e8f82">cùng một điểm!</span>';setTimeout(step,2600)}})(t0)}
+  draw(null);setTimeout(step,600)}
+
+/* ---------- R1a MÁY BIẾN HÌNH ---------- */
+(function(){const T=['0,5','-1,25','3','-0,6','1 1/2','0'];let i=0,s=0,tries=0,ok=false;
+  function load(){tries=0;ok=false;$('cv-x').innerHTML=F(T[i]);$('cv-n').value='';$('cv-d').value='';msg('cv-f','');prog('cv',i,T.length,s)}
+  $('cv-ck').onclick=()=>{if(ok)return;const n=parseInt($('cv-n').value),d=parseInt($('cv-d').value);
+    if(isNaN(n)||isNaN(d)){msg('cv-f','Em nhập cả tử số và mẫu số nhé!','info');return}
+    if(d===0){msg('cv-f','Ối! Mẫu số phải <b>khác 0</b>. Phép chia cho 0 không có nghĩa.','warn');sfx.bad();return}
+    tries++;const v=val(T[i]),m=$('cv-m');m.classList.remove('spin');void m.offsetWidth;m.classList.add('spin');
+    if(Math.abs(n/d-v)<1e-9){ok=true;if(tries===1)s++;sfx.ok();const g=simp({n,d});
+      msg('cv-f',`✅ Đúng! ${pretty(T[i])} = ${fs(n,d)}${(g.n!==n||g.d!==d)?' = '+fs(g.n,g.d):''}. Vậy ${pretty(T[i])} là một <b>số hữu tỉ</b>. Mỗi số hữu tỉ có vô số cách viết, ví dụ ${fs(g.n*2,g.d*2)}, ${fs(g.n*3,g.d*3)}…`,'ok');
+      say(['Biến hình thành công! ✨','Chuẩn luôn, em hiểu bài rồi đó!','Đúng rồi! Số nguyên và số thập phân hữu hạn đều là số hữu tỉ.'][i%3]);prog('cv',i+1,T.length,s)}
+    else{sfx.bad();msg('cv-f',`Chưa đúng: ${fs(n,d)} = ${String(+(n/d).toFixed(4)).replace('.',',')}, chưa bằng ${pretty(T[i])}.`+(tries>=2?' 💡 '+hint(T[i]):''),'warn');say('Thử lại nhé! Số thập phân có 1 chữ số sau dấu phẩy thì mẫu số là 10, có 2 chữ số thì mẫu là 100.')}};
+  function hint(t){if(t.includes(' '))return 'Hỗn số 1 1/2 = (1·2 + 1)/2.';if(t.includes(','))return 'Ví dụ 0,7 = 7/10; 0,25 = 25/100.';return 'Số nguyên a viết được thành a/1.'}
+  $('cv-nx').onclick=()=>{if(!ok&&tries===0){msg('cv-f','Em thử biến hình trước đã nhé!','info');return}
+    if(i<T.length-1){i++;load()}else{const p=s>=4;msg('cv-f',p?'🎉 Em biến hình đúng ngay '+s+'/6 số!':'Em đúng ngay '+s+'/6 số. Cần 4/6 để nhận huy hiệu, làm lại nhé!',p?'ok':'warn');if(p)award('conv');else{i=0;s=0;setTimeout(load,1800)}}};
+  load()})();
+
+/* ---------- R1b THẺ SINH ĐÔI ---------- */
+(function(){const P=[['-1/2','-0,5'],['3/4','6/8'],['1,25','5/4'],['-2/3','-4/6'],['0,2','1/5'],['-1,5','-6/4']];
+  const COL=['#2563eb','#e63946','#0e8f82','#7c3aed','#f77f00','#db2777'];let open=[],moves=0,got=0,lock=false,found=[];
+  function load(){open=[];moves=0;got=0;lock=false;found=[];$('tw-moves').textContent=0;$('tw-pairs').textContent=0;msg('tw-f','');axis($('tw-line'),2,[]);
+    const cards=[];P.forEach((p,k)=>p.forEach(s=>cards.push({s,k})));const d=$('tw-deck');d.innerHTML='';
+    shuffle(cards).forEach(c=>{const b=document.createElement('button');b.className='mc';b.setAttribute('aria-label','Thẻ úp');b.innerHTML=`<div class="in"><div class="k">?</div><div class="f">${F(c.s)}</div></div>`;b.onclick=()=>flip(b,c);d.appendChild(b)})}
+  function flip(b,c){if(lock||b.classList.contains('open')||b.classList.contains('got'))return;sfx.flip();b.classList.add('open');b.setAttribute('aria-label','Thẻ '+pretty(c.s));open.push([b,c]);
+    if(open.length<2)return;moves++;$('tw-moves').textContent=moves;const[[b1,c1],[b2,c2]]=open;open=[];
+    if(Math.abs(val(c1.s)-val(c2.s))<1e-9){b1.classList.add('got');b2.classList.add('got');got++;$('tw-pairs').textContent=got;sfx.ok();
+      found.push({v:val(c1.s),c:COL[c1.k],t:pretty(c1.s)+' = '+pretty(c2.s),up:found.length%2===0,drop:true});axis($('tw-line'),2,found);const g=simp(parse(c1.s));say(`Đúng cặp sinh đôi! Cả hai đều bằng ${fs(g.n,g.d)}.`);
+      if(got===6){const st=moves<=9?'⭐⭐⭐':moves<=13?'⭐⭐':'⭐';msg('tw-f',`🎉 Tìm đủ 6 cặp sau ${moves} lượt (${st}). Mỗi cặp nằm đúng một điểm trên trục số.`,'ok');award('twin')}}
+    else{lock=true;sfx.bad();b1.classList.add('no');b2.classList.add('no');say(`${pretty(c1.s)} và ${pretty(c2.s)} không bằng nhau. Thử đổi về phân số tối giản xem!`);
+      setTimeout(()=>{[b1,b2].forEach(x=>{x.classList.remove('open','no');x.setAttribute('aria-label','Thẻ úp')});lock=false},950)}}
+  $('tw-re').onclick=load;load()})();
+
+/* ---------- R2a ẾCH NHẢY ---------- */
+(function(){const T=['-3/4','1/2','-1,5','5/4','-2/3','0,25','-7/4','4/3'];
+  let i=0,s=0,tries=0,ok=false,busy=false,den=4,sel=0,fx=xOf(0),fy=PY,cnt='',landed=null;
+  function load(){den=parse(T[i]).d;tries=0;ok=false;sel=0;landed=null;cnt='';fx=xOf(0);fy=PY;$('fr-t').innerHTML=F(T[i]);msg('fr-f','');prog('fr',i,T.length,s);draw()}
+  function draw(){const lb=[];if(ok)lb.push({x:xOf(val(T[i])),y:PY-44,t:pretty(T[i]),c:'#b0125b'});if(landed!==null&&!ok)lb.push({x:xOf(landed/den),y:PY-46,t:fs(landed,den),c:'#b45309'});if(cnt)lb.push({x:fx,y:fy-40,t:cnt,c:'#0b4f6c'});
+    pond($('fr-pond'),{gid:'frw',den,sel:ok?null:sel,labels:lb,frogs:[{x:fx,y:fy}],flower:ok?val(T[i]):null,pick:k=>{if(busy||ok)return;sel=k;sfx.flip();draw()}})}
+  $('fr-lf').onclick=()=>{if(busy||ok)return;sel=Math.max(MIN*den,sel-1);draw()};$('fr-rt').onclick=()=>{if(busy||ok)return;sel=Math.min(MAX*den,sel+1);draw()};
+  function hop(a,b,dur,big){return new Promise(res=>{const x0=xOf(a/den),x1=xOf(b/den),t0=performance.now();
+    (function st(now){const t=Math.min(1,(now-t0)/dur);fx=x0+(x1-x0)*t;fy=PY-Math.sin(Math.PI*t)*(big?60:26);draw();if(t<1)requestAnimationFrame(st);else{fy=PY;res()}})(t0)})}
+  $('fr-jump').onclick=async()=>{if(busy||ok)return;busy=true;$('fr-jump').disabled=true;landed=null;msg('fr-f','');
+    const dir=sel>0?1:-1;for(let k=0;k!==sel;k+=dir){sfx.tap();cnt=fs(k+dir,den);await hop(k,k+dir,Math.max(170,420-Math.abs(sel)*35))}
+    const t=val(T[i]),v=sel/den;tries++;cnt='';
+    if(Math.abs(v-t)<1e-9){ok=true;if(tries===1)s++;sfx.ok();confetti(40);draw();
+      msg('fr-f',`✅ Chính xác! Ếch nhảy ${Math.abs(sel)} bước, mỗi bước 1/${den} đơn vị, sang ${t<0?'<b>trái</b>':'<b>phải</b>'} điểm 0, nên tới ${pretty(T[i])}${T[i].includes(',')?' (= '+fs(sel,den)+')':''}.`,'ok');
+      say(['Ộp ộp! Ngon lành 😋','Em giỏi quá! Nhảy chuẩn từng lá.','Chính xác! Em đếm vạch rất cẩn thận.'][i%3]);prog('fr',i+1,T.length,s)}
+    else{landed=sel;sfx.bad();draw();
+      msg('fr-f',`Ùm! 💦 Lá này là <b>${fs(sel,den)}</b>, chưa phải ${pretty(T[i])}. ${v<t?'Số cần tìm lớn hơn, chọn lá bên phải.':'Số cần tìm nhỏ hơn, chọn lá bên trái.'}`+(tries>=2?` 💡 Viết số thành phân số có mẫu ${den}: tử số cho biết phải nhảy bao nhiêu bước từ 0 (dấu âm thì sang trái).`:''),'warn');
+      say('Không sao, thử lại nào! Em đếm lại số vạch nhỏ từ 0 nhé.');await sleep(500);await hop(sel,0,450,true);draw()}
+    busy=false;$('fr-jump').disabled=false};
+  $('fr-nx').onclick=()=>{if(busy)return;if(!ok&&tries===0){msg('fr-f','Em thử nhảy trước đã nhé! 🐸','info');return}
+    if(i<T.length-1){i++;load()}else{const p=s>=6;msg('fr-f',p?'🎉 Em nhảy đúng ngay lần đầu '+s+'/8 câu!':'Em đúng ngay lần đầu '+s+'/8 câu. Cần 6/8 để nhận huy hiệu, chơi lại nhé!',p?'ok':'warn');if(p)award('frog');else{i=0;s=0;setTimeout(load,1800)}}};
+  window.__fr={get den(){return den},get busy(){return busy},set sel(k){sel=k;draw()}};load()})();
+
+/* ---------- R2b GƯƠNG SỐ ĐỐI ---------- */
+(function(){const T=['3/4','-1/2','5/4','-1,5','2/3'];let i=0,s=0,tries=0,ok=false,den=4,n=3,sel=0;
+  function load(){const f=parse(T[i]);den=f.d;n=f.n;tries=0;ok=false;sel=0;$('mr-t').innerHTML=F(T[i]);msg('mr-f','');prog('mr',i,T.length,s);draw()}
+  function draw(){const lb=[{x:xOf(n/den),y:56,t:pretty(T[i]),c:'#0e8f82'}],fr=[{x:xOf(n/den),y:PY}];
+    if(ok){fr.push({x:xOf(-n/den),y:PY,flip:true});lb.push({x:xOf(-n/den),y:56,t:fs(-n,den),c:'#db2777'})}
+    pond($('mr-pond'),{gid:'mrw',den,sel:ok?null:sel,labels:lb,frogs:fr,mirror:true,span:ok?n:0,pick:k=>{if(ok)return;sel=k;sfx.flip();draw()}})}
+  $('mr-lf').onclick=()=>{if(ok)return;sel=Math.max(MIN*den,sel-1);draw()};$('mr-rt').onclick=()=>{if(ok)return;sel=Math.min(MAX*den,sel+1);draw()};
+  $('mr-ck').onclick=()=>{if(ok)return;tries++;
+    if(sel===-n){ok=true;if(tries===1)s++;sfx.ok();confetti(40);draw();msg('mr-f',`✅ Đúng! Số đối của ${pretty(T[i])} là <b>${fs(-n,den)}</b>. Hai điểm nằm về hai phía của điểm 0 và cùng cách 0 một khoảng ${fs(Math.abs(n),den)}.`,'ok');say('Hai chú ếch soi gương thấy nhau rồi! 🪞');prog('mr',i+1,T.length,s)}
+    else{sfx.bad();msg('mr-f',(sel===n?'Lá này chính là chỗ Ếch đang đứng. ':`Lá này là ${fs(sel,den)}. `)+`Số đối phải nằm ở <b>phía bên kia</b> điểm 0 và cách 0 đúng bằng khoảng cách từ ${pretty(T[i])} tới 0.`,'warn');say('Đếm số bước từ Ếch tới gương, rồi đếm đúng chừng ấy bước sang phía bên kia.')}};
+  $('mr-nx').onclick=()=>{if(!ok&&tries===0){msg('mr-f','Em chọn lá sen rồi bấm Soi gương trước nhé!','info');return}
+    if(i<T.length-1){i++;load()}else{const p=s>=4;msg('mr-f',p?'🎉 Em tìm đúng ngay '+s+'/5 số đối!':'Em đúng ngay '+s+'/5 câu. Cần 4/5 để nhận huy hiệu, làm lại nhé!',p?'ok':'warn');if(p)award('mirror');else{i=0;s=0;setTimeout(load,1800)}}};
+  window.__mr={get sol(){return -n},set sel(k){sel=k;draw()}};load()})();
+
+/* ---------- R3 ĐẤU TRƯỜNG ---------- */
+(function(){const T=[['-1/2','-1/3'],['3/4','0,75'],['-5/6','1/6'],['2/3','3/5'],['-0,4','-2/5'],['7/8','-7/8'],['-3/2','-1'],['5/9','4/7']];
+  let i=0,s=0,ans=false,streak=0;
+  function load(){ans=false;const[a,b]=T[i];$('cp-a').innerHTML=F(a);$('cp-b').innerHTML=F(b);$('cp-s').textContent='?';$('cp-s').className='slot';msg('cp-f','');prog('cp',i,T.length,s);axis($('cp-line'),1,[])}
+  function why(a,b,r){const fa=parse(a),fb=parse(b),Lc=fa.d*fb.d/gcd(fa.d,fb.d),na=fa.n*Lc/fa.d,nb=fb.n*Lc/fb.d,p=x=>x<0?'−'+(-x):x;return `Quy đồng: ${pretty(a)} = ${fs(na,Lc)}; ${pretty(b)} = ${fs(nb,Lc)}. So sánh tử: ${p(na)} ${r} ${p(nb)}.`}
+  $$('#v-r3 .cmp').forEach(b=>b.onclick=()=>{if(ans)return;ans=true;const[a,c]=T[i],va=val(a),vc=val(c),r=Math.abs(va-vc)<1e-9?'=':(va<vc?'<':'>'),ok=b.dataset.c===r;
+    $('cp-s').textContent=r;$('cp-s').className='slot '+(ok?'ok':'bad');if(ok){s++;streak++;sfx.ok();if(streak>=3)confetti(40)}else{streak=0;sfx.bad()}
+    $('cp-streak').textContent=streak>=2?'🔥 Chuỗi đúng ×'+streak:'';
+    axis($('cp-line'),1,[{v:va,c:'#2563eb',t:pretty(a),up:true,drop:true},{v:vc,c:'#e63946',t:pretty(c),up:false,drop:true}]);
+    msg('cp-f',(ok?'✅ Đúng rồi! ':'💭 Chưa đúng, phải là '+pretty(a)+' '+r+' '+pretty(c)+'. ')+(r==='='?'Hai cách viết khác nhau nhưng là <b>cùng một số hữu tỉ</b>, nên hai bóng rơi trùng một điểm. ':'Bóng nằm bên trái thì nhỏ hơn. ')+why(a,c,r),ok?'ok':'warn');
+    say(ok?(streak>=3?'Chuỗi '+streak+' câu đúng liền! Nóng quá 🔥':'Chuẩn luôn! Nhìn trục số là thấy ngay.'):'Nhìn hai quả bóng rơi xuống trục số: quả nào bên trái?');prog('cp',i+1,T.length,s)});
+  $('cp-nx').onclick=()=>{if(!ans){msg('cp-f','Em chọn dấu trước đã nhé!','info');return}
+    if(i<T.length-1){i++;load()}else{const p=s>=6;msg('cp-f',p?'🎉 Em đúng '+s+'/8 câu!':'Em đúng '+s+'/8 câu. Cần 6/8 để nhận huy hiệu, chơi lại nhé!',p?'ok':'warn');if(p)award('cmp');else{i=0;s=0;streak=0;setTimeout(load,1800)}}};
+  load()})();
+
+/* ---------- R4 BIỂN SÂU ---------- */
+(function(){const T=[[['🐬','Cá heo','-1/4'],['🦅','Đại bàng','1,5'],['🚢','Con tàu','0'],['🤿','Thợ lặn','-3/4']],
+  [['🐙','Bạch tuộc','-2'],['🎈','Khinh khí cầu','7/4'],['🐠','Cá hề','-0,5'],['🕊️','Bồ câu','3/4']],
+  [['🐋','Cá voi','-1,25'],['🦈','Cá mập','-0,8'],['🪁','Cánh diều','1/2'],['🐢','Rùa biển','-1/10']],
+  [['🚁','Trực thăng','6/5'],['🦅','Đại bàng','1,25'],['🐡','Cá nóc','-3/10'],['🦑','Mực ống','-0,35']]];
+  let i=0,s=0,pick=[],miss=false,fin=false;const yOf=v=>220-v*95;
+  function sea(items){let h=`<defs><linearGradient id="odsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6ff"/><stop offset="1" stop-color="#eaf7ff"/></linearGradient>
+    <linearGradient id="odsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cc3e6"/><stop offset="1" stop-color="#0b3d66"/></linearGradient></defs>
+    <rect x="0" y="0" width="420" height="220" rx="16" fill="url(#odsk)"/><rect x="0" y="220" width="420" height="220" rx="16" fill="url(#odsw)"/><rect x="0" y="220" width="420" height="16" fill="#4cc3e6"/>
+    <text x="400" y="34" text-anchor="end" font-size="28">☀️</text><text x="404" y="212" text-anchor="end" font-size="13" font-weight="700" fill="#0b4f6c">mực nước biển</text>
+    <line x1="80" y1="18" x2="80" y2="420" stroke="#12324a" stroke-width="3"/><polygon points="80,8 73,22 87,22" fill="#12324a"/>`;
+    for(let k=-8;k<=8;k++){const y=yOf(k/4),mj=k%4===0;h+=`<line x1="${mj?66:72}" y1="${y}" x2="${mj?94:88}" y2="${y}" stroke="${mj?'#12324a':'#5b6b80'}" stroke-width="${mj?3:1.5}"/>`;
+      if(mj)h+=`<text x="56" y="${y+7}" text-anchor="end" font-size="20" font-weight="800" fill="${k<0?'#fff':'#12324a'}">${k<0?'−'+(-k/4):k/4}</text>`}
+    (items||[]).forEach((o,j)=>{const y=yOf(val(o[2])),x=j%2?280:150,c=val(o[2])<0?'#fff':'#12324a';
+      h+=`<g><line x1="80" y1="${y}" x2="${x-24}" y2="${y}" stroke="${c}" stroke-dasharray="4 4" opacity=".8"/><circle cx="80" cy="${y}" r="7" fill="#fbbf24" stroke="#12324a" stroke-width="2"/>
+      <text x="${x}" y="${y+11}" text-anchor="middle" font-size="30">${o[0]}<animate attributeName="y" from="226" to="${y+11}" dur=".7s" fill="freeze"/></text><text x="${x+26}" y="${y+7}" font-size="17" font-weight="800" fill="${c}">${pretty(o[2])}</text></g>`});
+    $('od-sea').innerHTML=h}
+  function load(){pick=[];miss=false;fin=false;msg('od-f','');prog('od',i,T.length,s);$('od-order').textContent='';const box=$('od-objs');box.innerHTML='';
+    shuffle(T[i]).forEach(o=>{const b=document.createElement('button');b.className='obj';b.innerHTML=`<span class="e">${o[0]}</span><span class="n">${o[1]}</span><span class="v">${F(o[2])}</span>`;b.onclick=()=>tap(b,o);box.appendChild(b)});sea([])}
+  function tap(el,o){if(fin||el.classList.contains('picked'))return;const sorted=[...T[i]].sort((a,b)=>val(a[2])-val(b[2]));
+    if(o===sorted[pick.length]){pick.push(o);el.classList.add('picked');sfx.tap();$('od-order').textContent=pick.map(x=>x[0]).join('  <  ');
+      if(pick.length===4){fin=true;if(!miss)s++;sfx.ok();confetti(40);prog('od',i+1,T.length,s);sea(sorted);msg('od-f','✅ Chính xác! '+sorted.map(x=>pretty(x[2])).join(' &lt; ')+'. Trên trục số đứng, điểm ở <b>dưới</b> biểu diễn số nhỏ hơn.','ok');say('Cả đội đã về đúng tầng! Nhìn trục số đứng bên cạnh nhé.')}}
+    else{miss=true;sfx.bad();el.classList.add('shake');setTimeout(()=>el.classList.remove('shake'),400);
+      msg('od-f','Chưa đúng thứ tự. 💡 Ai ở dưới nước (số âm) thấp hơn ai ở trên trời. Hai số âm: số nào xa 0 hơn thì ở sâu hơn. Làm lại lượt này nhé!','warn');say('Ối, nhầm tầng rồi! Đổi các số về cùng dạng rồi so sánh.');
+      setTimeout(()=>{pick=[];$$('#od-objs .obj').forEach(c=>c.classList.remove('picked'));$('od-order').textContent=''},700)}}
+  $('od-nx').onclick=()=>{if(!fin){msg('od-f','Em xếp xong lượt này trước đã nhé!','info');return}
+    if(i<T.length-1){i++;load()}else{const p=s>=3;msg('od-f',p?'🎉 Em xếp đúng ngay '+s+'/4 lượt!':'Em xếp đúng ngay '+s+'/4 lượt. Cần 3/4 để nhận huy hiệu, chơi lại nhé!',p?'ok':'warn');if(p)award('order');else{i=0;s=0;setTimeout(load,1800)}}};
+  load()})();
+
+boot();
+</script>
+<!-- ===== TRỢ GIẢNG AI – PHIÊU LƯU TRÊN TRỤC SỐ (dán ngay TRƯỚC thẻ </body> trong index.html) ===== -->
+<style>
+#tgai-btn{position:fixed;right:18px;bottom:18px;z-index:99999;display:flex;align-items:center;gap:8px;padding:12px 18px;border:none;border-radius:999px;background:linear-gradient(135deg,#2dd4bf,#0ea5e9);color:#04221f;font:700 15px/1 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(45,212,191,.35)}
+#tgai-btn:hover{transform:translateY(-2px)}
+#tgai-box{position:fixed;right:18px;bottom:78px;z-index:99999;width:370px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 110px);display:none;flex-direction:column;background:#0b1f24;border:1px solid #1f4a4f;border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.5);font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#e6fffb;overflow:hidden}
+#tgai-box.open{display:flex}
+#tgai-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#0f2c32;border-bottom:1px solid #1f4a4f}
+#tgai-head b{font-size:15px}
+#tgai-head small{display:block;font-size:12px;color:#8fbfba;font-weight:400}
+#tgai-x{background:none;border:none;color:#8fbfba;font-size:22px;cursor:pointer}
+#tgai-log{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.tgai-b{padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.5;max-width:88%;white-space:pre-wrap}
+.tgai-a{align-self:flex-start;background:#133a40;border-bottom-left-radius:4px}
+.tgai-u{align-self:flex-end;background:#2dd4bf;color:#04221f;border-bottom-right-radius:4px}
+#tgai-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 8px}
+.tgai-c{border:1px solid #1f4a4f;background:transparent;color:#bdf5ec;border-radius:999px;padding:5px 10px;font:13px 'Be Vietnam Pro',system-ui,sans-serif;cursor:pointer}
+#tgai-f{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #1f4a4f}
+#tgai-q{flex:1;min-width:0;background:#0f2c32;border:1px solid #1f4a4f;border-radius:12px;padding:10px;color:#e6fffb;font:15px 'Be Vietnam Pro',system-ui,sans-serif}
+#tgai-send{border:none;border-radius:12px;padding:0 14px;background:#2dd4bf;color:#04221f;font-weight:700;cursor:pointer}
+#tgai-rule{font-size:11.5px;color:#8fbfba;padding:0 12px 10px}
+@media(max-width:600px){#tgai-btn .tgai-t{display:none}#tgai-btn{padding:14px;font-size:22px}}
+/* Khi trang được nhúng (Google Site): nút thành thanh ở đầu trang, khung chat mở ngay bên dưới */
+.tgai-embed #tgai-btn{position:relative;right:auto;bottom:auto;width:calc(100% - 24px);margin:10px 12px 0;justify-content:center;padding:12px 18px;font-size:15px}
+.tgai-embed #tgai-btn .tgai-t{display:inline}
+.tgai-embed #tgai-box{position:absolute;top:66px;bottom:auto;right:12px;height:500px;max-height:none}
+</style>
+
+<button id="tgai-btn" aria-label="Mở trợ giảng AI">🤖<span class="tgai-t"> Hỏi trợ giảng AI</span></button>
+<div id="tgai-box" role="dialog" aria-label="Trợ giảng AI">
+  <div id="tgai-head"><div><b>🤖 Trợ giảng AI</b><small>Toán 7 · Bài 1: Tập hợp các số hữu tỉ</small></div><button id="tgai-x" aria-label="Đóng">×</button></div>
+  <div id="tgai-log"><div class="tgai-b tgai-a">Chào em! Mình là trợ giảng AI của Phiêu lưu trên trục số. Em bí ở đâu cứ hỏi, mình sẽ gợi ý để em tự tìm ra đáp án nhé 😊</div></div>
+  <div id="tgai-chips">
+    <button class="tgai-c">Số hữu tỉ là gì?</button>
+    <button class="tgai-c">Làm sao so sánh hai số âm?</button>
+    <button class="tgai-c">Gợi ý cho câu em đang làm</button>
+  </div>
+  <div id="tgai-f"><input id="tgai-q" maxlength="300" placeholder="Nhập câu hỏi của em…"><button id="tgai-send">Gửi</button></div>
+  <div id="tgai-rule">🛡️ Hỏi để hiểu, không hỏi để chép · Không ghi thông tin cá nhân · AI có thể sai, hãy kiểm tra với SGK và thầy cô.</div>
+</div>
+
+<script>
+(function(){
+  // Đang nằm trong khung nhúng (Google Site)? -> đưa nút lên đầu trang để luôn nhìn thấy
+  var inFrame=false;try{inFrame=window.self!==window.top}catch(e){inFrame=true}
+  if(inFrame){document.documentElement.classList.add('tgai-embed');var bt=document.getElementById('tgai-btn');document.body.insertBefore(bt,document.body.firstChild);document.body.style.position='relative';document.body.appendChild(document.getElementById('tgai-box'))}
+  var box=document.getElementById('tgai-box'),log=document.getElementById('tgai-log'),inp=document.getElementById('tgai-q'),hist=[],busy=false;
+  document.getElementById('tgai-btn').onclick=function(){box.classList.toggle('open');if(box.classList.contains('open'))inp.focus()};
+  document.getElementById('tgai-x').onclick=function(){box.classList.remove('open')};
+  function add(t,who){var d=document.createElement('div');d.className='tgai-b '+who;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+  function where(){
+    var v=[].slice.call(document.querySelectorAll('.view')).find(function(e){return !e.hidden}),t=v?v.innerText.replace(/\s+/g,' ').slice(0,320):'';
+    return 'Học sinh đang dùng học liệu "Phiêu lưu trên trục số" (Toán 7, Bài 1: Tập hợp các số hữu tỉ). Phần đang xem: "'+t+'". KHÔNG nói ra đáp án của câu đang làm, chỉ gợi ý cách nghĩ.';
+  }
+  async function ask(text){
+    var q=(text||inp.value).trim(); if(!q||busy)return; inp.value=''; busy=true;
+    add(q,'tgai-u'); var w=add('Trợ giảng đang suy nghĩ…','tgai-a');
+    try{
+      var r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q,context:where(),history:hist.slice(-6)})});
+      var j=await r.json(); if(!r.ok||!j.reply)throw 0;
+      w.textContent=j.reply; hist.push({role:'user',text:q},{role:'ai',text:j.reply});
+    }catch(e){w.textContent='Trợ giảng AI đang tạm nghỉ. Em thử lại sau hoặc hỏi thầy cô nhé!'}
+    busy=false;
+  }
+  document.getElementById('tgai-send').onclick=function(){ask()};
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')ask()});
+  document.querySelectorAll('.tgai-c').forEach(function(b){b.onclick=function(){ask(b.textContent)}});
+})();
+</script>
+<!-- ===== HẾT ĐOẠN TRỢ GIẢNG AI ===== -->
+
+<!-- Vercel Web Analytics -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
